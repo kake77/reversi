@@ -25,7 +25,6 @@ for(var i=0;i<8;i++){
     }
 }
 //座標(x,y)の場所の石の色をidの色に変更する関数
-}
 var change=function(x,y,id){
     var color="";
     if(id==0){
@@ -109,7 +108,7 @@ var rev=function(x,y,dir,num){
     }
 }
 
-//そこに石を置いてひっくり返せるか判定するかんすう
+//そこに石を置いてひっくり返せるか判定する関数
 var check=function(x,y,dir,flag){
     
     var i=1;
