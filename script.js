@@ -1,11 +1,15 @@
-const cdir=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+const cdir=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];//8方向のベクトル配列
 
+//表示用の要素の取得
 var board=document.getElementById("board");
 var sign=document.getElementById("sign");
 var numStone=document.getElementById("numStone");
-var stones=[];
-var data=[];
+
+var stones=[];//表示用要素の配列
+var data=[];//それぞれの場所のイニの色の情報を保持する配列
 var order=0;//0:黒 1:白
+
+//石を生成し、それをdata,stonesに格納
 for(var i=0;i<8;i++){
     stones[i]=[];
     data[i]=[]
@@ -20,6 +24,8 @@ for(var i=0;i<8;i++){
         stones[i][j]=tmp;
     }
 }
+//座標(x,y)の場所の石の色をidの色に変更する関数
+}
 var change=function(x,y,id){
     var color="";
     if(id==0){
@@ -33,6 +39,7 @@ var change=function(x,y,id){
     data[x][y]=id;
 }
 
+//初期化関数（真ん中４つの石を配置して順番を黒からにする）
 var ini=function(){
     for(var i=0;i<8;i++){
         for(var j=0;j<8;j++){
@@ -50,6 +57,7 @@ var ini=function(){
     order=0;
 }
 
+//終了処理(石の数に従ってどっちが勝ったかを判定する)
 var fin=function(winner){
     if(winner>0){
         sign.innerHTML="黒の勝ち";
@@ -60,6 +68,8 @@ var fin=function(winner){
     }
 }
 
+//手番をもう片方に移す処理
+//詰み状態の判定もし、積んでいたらもう一度同じプレイヤーの番、全部同じ色で埋まっていたら試合終了
 var next=function(){
     order=(order+1)%2;
     var countStones=[0,0,0];//黒,白,置ける場所
@@ -92,12 +102,14 @@ var next=function(){
     }
 }
 
+//一直線に石をひっくり返す関数
 var rev=function(x,y,dir,num){
     for(var i=1;i<num;i++){
         change(x+i*cdir[dir][0],y+i*cdir[dir][1],order);
     }
 }
 
+//そこに石を置いてひっくり返せるか判定するかんすう
 var check=function(x,y,dir,flag){
     
     var i=1;
@@ -112,7 +124,7 @@ var check=function(x,y,dir,flag){
     }
     return 0;
 }
-
+//石を置く処理の関数
 var hit=function(x,y){
     var count=0;
     if(data[x][y]!=2){
